@@ -15,16 +15,17 @@ class MainActivity : AppCompatActivity() {
         val buttonSendBroadcast = findViewById<Button>(R.id.buttonSendBroadcast)
 
         buttonSendBroadcast.setOnClickListener {
-            val intent = Intent()
-            intent.action = "com.example.applicationfortestbroadcast.BROADCAST"
+            val broadcastIntent = Intent()
+            broadcastIntent.action = "com.example.applicationfortestbroadcast.BROADCAST"
+            broadcastIntent.putExtra("CITY_NAME", "Moscow")
 
             val packageManager = packageManager
-            val infos: List<ResolveInfo> = packageManager.queryBroadcastReceivers(intent, 0)
+            val infos: List<ResolveInfo> = packageManager.queryBroadcastReceivers(broadcastIntent, 0)
 
             for(info in infos) {
                 val componentName = ComponentName(info.activityInfo.packageName, info.activityInfo.name)
-                intent.component = componentName
-                sendBroadcast(intent)
+                broadcastIntent.component = componentName
+                sendBroadcast(broadcastIntent)
             }
         }
     }
